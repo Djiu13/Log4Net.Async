@@ -43,7 +43,20 @@ namespace Log4Net.Async.Tests
             LogManager.Shutdown();
         }
 
-        [Test]
+		[Test]
+		public void NoExceptionThrownWhenNoEvent()
+		{
+			// Arrange
+
+			// Act
+			asyncForwardingAppender.DoAppend((LoggingEvent)null);
+			asyncForwardingAppender.Close();
+
+			// Assert - should not have had an exception from previous call
+			Assert.That(debugAppender.LoggedEventCount, Is.EqualTo(0), "No message or exception expected");
+		}
+
+		[Test]
         public void CanHandleNullLoggingEvent()
         {
             // Arrange
