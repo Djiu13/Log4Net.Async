@@ -123,14 +123,14 @@
             var sleepInterval = TimeSpan.FromMilliseconds(100);
             var flushTimespan = TimeSpan.FromSeconds(_shutdownFlushTimeout);
 
-			//Sleep until either timeout is expired or all events have flushed
-			while (flushTimespan >= sleepInterval && !_loggingEvents.IsCompleted)
-			{
-		        flushTimespan -= sleepInterval;
-		        Thread.Sleep(sleepInterval);
-	        }
+            //Sleep until either timeout is expired or all events have flushed
+            while (flushTimespan >= sleepInterval && !_loggingEvents.IsCompleted)
+            {
+                flushTimespan -= sleepInterval;
+                Thread.Sleep(sleepInterval);
+            }
 
-			if (!_loggingTask.IsCompleted && !_loggingCancelationToken.IsCancellationRequested)
+            if (!_loggingTask.IsCompleted && !_loggingCancelationToken.IsCancellationRequested)
             {
                 _loggingCancelationTokenSource.Cancel();
                 //Wait here so that the error logging messages do not get into a random order.
@@ -194,8 +194,8 @@
             //the queue is marked as adding completed, or the task is canceled.
             try
             {
-				//This is to avoid throwing an exception when there is no event
-	            if (_loggingEvents.Count == 0) return;
+                //This is to avoid throwing an exception when there is no event
+                if (_loggingEvents.Count == 0) return;
 
                 //This call blocks until an item is available or until adding is completed
                 foreach (var entry in _loggingEvents.GetConsumingEnumerable(_loggingCancelationToken))
