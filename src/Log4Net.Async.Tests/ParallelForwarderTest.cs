@@ -44,15 +44,14 @@ namespace Log4Net.Async.Tests
         }
 
 		[Test]
-		public void NoExceptionThrownWhenNoEvent()
+		public void NoExceptionThrownWhenCancelBeforeEndAndNoEvent()
 		{
 			// Arrange
 
 			// Act
-			asyncForwardingAppender.DoAppend((LoggingEvent)null);
 			asyncForwardingAppender.Close();
 
-			// Assert - should not have had an exception from previous call
+			// Assert
 			Assert.That(debugAppender.LoggedEventCount, Is.EqualTo(0), "No message or exception expected");
 		}
 
