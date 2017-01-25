@@ -49,7 +49,7 @@ namespace Log4Net.Async.Tests
             // Arrange
             
             // Act
-            asyncForwardingAppender.Close();
+            LogManager.Shutdown();
             
             // Assert
             Assert.That(debugAppender.LoggedEventCount, Is.EqualTo(0), "No message or exception expected");

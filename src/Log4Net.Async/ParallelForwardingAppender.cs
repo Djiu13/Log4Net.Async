@@ -194,9 +194,6 @@
             //the queue is marked as adding completed, or the task is canceled.
             try
             {
-                //This is to avoid throwing an exception when there is no event
-                if (_loggingEvents.Count == 0) return;
-
                 //This call blocks until an item is available or until adding is completed
                 foreach (var entry in _loggingEvents.GetConsumingEnumerable(_loggingCancelationToken))
                 {
@@ -206,6 +203,9 @@
             }
             catch (OperationCanceledException ex)
             {
+                //This is to avoid throwing an exception when there is no event
+                if (_loggingEvents.Count == 0) return;
+
                 //The thread was canceled before all entries could be forwarded and the collection completed.
                 ForwardInternalError("Subscriber task was canceled before completion.", ex, ThisType);
                 //Cancellation is called in the CompleteSubscriberTask so don't call that again.
